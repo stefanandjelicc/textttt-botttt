@@ -1,0 +1,36 @@
+const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
+});
+
+client.on('ready', () => {
+    console.log(`✅ Bot je online: ${client.user.tag}`);
+});
+
+client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
+
+    if (message.content.toLowerCase() === '!okvir') {
+        const embed = new EmbedBuilder()
+            .setTitle('📺 MOJ CUSTOM OKVIR')
+            .setDescription('Ovo je tekst unutar okvira.\nMožeš da pišeš šta hoćeš ovde!')
+            .setThumbnail('https://cdn.discordapp.com/attachments/1072557319885439098/1497749148353691778/image.png')
+            .setColor('#FF0000');
+
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setLabel('KLIKNI OVDE')
+                .setURL('https://www.youtube.com')
+                .setStyle(ButtonStyle.Link)
+        );
+
+        return message.channel.send({ embeds: [embed], components: [row] });
+    }
+});
+
+client.login('MTQ5NzcyOTA0MDMyNzUwODAxOA.GD4Sz2.VWSmMXGajCmmeZllWKktK3hVMPxcB_RllfDFKs');
